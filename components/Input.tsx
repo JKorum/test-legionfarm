@@ -1,8 +1,9 @@
 import React, { useState, useEffect, FC } from 'react'
 import { TextInput, StyleSheet } from 'react-native'
+import { colors, offsets } from '../global/styles'
 
 interface InputProps {
-  fetchData: (name: string) => Promise<void>
+  fetchData: (name: string) => void
 }
 
 export const Input: FC<InputProps> = ({ fetchData }) => {
@@ -19,15 +20,19 @@ export const Input: FC<InputProps> = ({ fetchData }) => {
   }
 
   return (
-    <TextInput onChangeText={onChangeText} value={value} style={styles.input} />
+    <TextInput
+      onChangeText={onChangeText}
+      value={value}
+      style={styles.input}
+      placeholder='Start typing a repo name...'
+    />
   )
 }
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: '#f1f1f1',
-    marginHorizontal: 4,
-    padding: 8,
-    borderRadius: 4,
+    backgroundColor: colors.white,
+    padding: offsets.base * 2,
+    borderRadius: offsets.base,
   },
 })
