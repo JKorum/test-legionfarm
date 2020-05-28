@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect, useRef } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import axios from 'axios'
-import { Input, RList } from '../components'
 import Constants from 'expo-constants'
 import { Ionicons } from '@expo/vector-icons'
+import { Input, RList } from '../components'
 import { SearchProps } from '../types/navigation'
 import { FetchedData, Entity } from '../types/api'
 import { colors, offsets } from '../global/styles'
@@ -11,6 +11,7 @@ import { colors, offsets } from '../global/styles'
 export const Search: FC<SearchProps> = () => {
   const [items, setItems] = useState<Entity[]>([])
   const [searched, setSearched] = useState('')
+  const [loading, setLoading] = useState(false)
   const timer = useRef<number | null>(null)
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export const Search: FC<SearchProps> = () => {
     if (timer.current === null) {
       timer.current = setTimeout(async () => {
         try {
+          setLoading(true)
           const res = await axios.get<FetchedData>(
             `https://api.github.com/search/repositories?q=${name}+in:name`,
           )
@@ -33,6 +35,7 @@ export const Search: FC<SearchProps> = () => {
           setItems([])
         } finally {
           timer.current = null
+          setLoading(false)
           if (searched !== name) {
             setSearched(name)
           }
@@ -48,7 +51,11 @@ export const Search: FC<SearchProps> = () => {
         <RList data={items} fetchData={fetchData} searched={searched} />
       ) : (
         <View style={styles.logo}>
-          <Ionicons name='logo-github' size={144} color={colors.grey} />
+          {!loading ? (
+            <Ionicons name='logo-github' size={144} color={colors.grey} />
+          ) : (
+            <ActivityIndicator size='large' color={colors.pink} />
+          )}
         </View>
       )}
     </View>

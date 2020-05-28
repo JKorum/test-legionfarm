@@ -25,6 +25,7 @@ export const Input: FC<InputProps> = ({ fetchData }) => {
       value={value}
       style={styles.input}
       placeholder='Start typing a repo name...'
+      maxLength={20}
     />
   )
 }
@@ -34,5 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     padding: offsets.base * 2,
     borderRadius: offsets.base,
+    fontSize: 24,
   },
 })

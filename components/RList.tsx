@@ -13,9 +13,9 @@ interface RListProps {
 export const RList: FC<RListProps> = ({ data, fetchData, searched }) => {
   const [loading, setLoading] = useState(false)
 
-  const onRefresh = async () => {
+  const onRefresh = () => {
     setLoading(true)
-    await fetchData(searched)
+    fetchData(searched)
     setLoading(false)
   }
 
