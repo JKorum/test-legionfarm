@@ -2,7 +2,7 @@
   "expo": {
     "name": "test-legionfarm",
     "slug": "test-legionfarm",
-    "sdkVersion": "~37.0.3",
+    "sdkVersion": "37.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,13 +17,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "com.jkorum.test-legionfarm",
-      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.jkorum.legionfarm",
+      "buildNumber": "1",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.jkorum.test-legionfarm",
-      "versionCode": "1.0.0"
+      "package": "com.jkorum.legionfarm",
+      "versionCode": 1
     }
   }
 }

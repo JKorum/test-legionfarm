@@ -6,16 +6,16 @@ import { offsets } from '../global/styles'
 
 interface RListProps {
   data: Entity[]
-  fetchData: (name: string) => void
+  fetchData: (name: string) => Promise<void>
   searched: string
 }
 
 export const RList: FC<RListProps> = ({ data, fetchData, searched }) => {
   const [loading, setLoading] = useState(false)
 
-  const onRefresh = () => {
+  const onRefresh = async () => {
     setLoading(true)
-    fetchData(searched)
+    await fetchData(searched)
     setLoading(false)
   }
 

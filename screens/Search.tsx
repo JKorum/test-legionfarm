@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef } from 'react'
+import React, { FC, useState } from 'react'
 import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import axios from 'axios'
 import Constants from 'expo-constants'
@@ -12,35 +12,21 @@ export const Search: FC<SearchProps> = () => {
   const [items, setItems] = useState<Entity[]>([])
   const [searched, setSearched] = useState('')
   const [loading, setLoading] = useState(false)
-  const timer = useRef<number | null>(null)
 
-  useEffect(() => {
-    return () => {
-      if (timer.current !== null) {
-        clearTimeout(timer.current)
+  const fetchData = async (name: string) => {
+    try {
+      setLoading(true)
+      const res = await axios.get<FetchedData>(
+        `https://api.github.com/search/repositories?q=${name}+in:name`,
+      )
+      setItems(res.data.items)
+    } catch (err) {
+      setItems([])
+    } finally {
+      setLoading(false)
+      if (searched !== name) {
+        setSearched(name)
       }
-    }
-  }, [])
-
-  const fetchData = (name: string) => {
-    if (timer.current === null) {
-      timer.current = setTimeout(async () => {
-        try {
-          setLoading(true)
-          const res = await axios.get<FetchedData>(
-            `https://api.github.com/search/repositories?q=${name}+in:name`,
-          )
-          setItems(res.data.items)
-        } catch (err) {
-          setItems([])
-        } finally {
-          timer.current = null
-          setLoading(false)
-          if (searched !== name) {
-            setSearched(name)
-          }
-        }
-      }, 1000)
     }
   }
 
